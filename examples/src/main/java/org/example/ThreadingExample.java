@@ -10,7 +10,7 @@ public class ThreadingExample {
                 try {
                     System.out.println("SlowWorker ran="+counter);
                     // causes this thread to sleep for 3 seconds
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                     counter++;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -23,13 +23,19 @@ public class ThreadingExample {
         @Override
         public void run() {
             int counter = 0;
+            int resets = 0;
             while (true) {
                 // causes this thread to print a message
                 // every 10,000 iterations of this loop
-                if (counter % 10_000 == 0) {
-                    System.out.println("FastWorker ran=" + counter);
+                if (counter % 1_000_000_000 == 0) {
+                    System.out.println("FastWorker ran=" + counter + ", resets="+resets);
                 }
                 counter++;
+                if (counter == Integer.MAX_VALUE) {
+                    System.out.println("FastWorker, resetting counter");
+                    counter = 0;
+                    resets ++;
+                }
             }
         }
     }
@@ -39,7 +45,7 @@ public class ThreadingExample {
         // slow worker implements Runnable, therefore can be run by a Thread
         SlowWorker slowWorker = new SlowWorker();
         // make an unnamed thread, which Java will assign a name
-        Thread threadA = new Thread();
+        Thread threadA = new Thread(slowWorker);
         // starts and runs threadA on another core on your machine
         threadA.start();
 
