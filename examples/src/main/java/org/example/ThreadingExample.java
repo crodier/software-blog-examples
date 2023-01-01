@@ -63,7 +63,11 @@ public class ThreadingExample {
             try {
                 System.out.println("Main thread ran="+mainCounter);
                 // causes this thread to sleep for 5 seconds
-                Thread.sleep(5000);
+                Thread.sleep(3000);
+
+                while ((mainCounter % 1_000_000_000) != 0)
+                    mainCounter++;
+
                 mainCounter++;
             }
             catch (InterruptedException e) {
