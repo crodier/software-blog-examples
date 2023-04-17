@@ -9,7 +9,7 @@ public class ThreadingExample {
             while (true) {
                 try {
                     System.out.println("SlowWorker ran="+counter);
-                    // causes this thread to sleep for 3 seconds
+                    // causes this thread to sleep for 1 second
                     Thread.sleep(1000);
                     counter++;
                 } catch (InterruptedException e) {
@@ -26,7 +26,7 @@ public class ThreadingExample {
             int resets = 0;
             while (true) {
                 // causes this thread to print a message
-                // every 10,000 iterations of this loop
+                // every billion iterations of this loop
                 if (counter % 1_000_000_000 == 0) {
                     System.out.println("FastWorker ran=" + counter + ", resets="+resets);
                 }
@@ -62,7 +62,7 @@ public class ThreadingExample {
         while (true) {
             try {
                 System.out.println("Main thread ran="+mainCounter);
-                // causes this thread to sleep for 5 seconds
+                // causes this thread to sleep for three seconds
                 Thread.sleep(3000);
 
                 while ((mainCounter % 1_000_000_000) != 0)
